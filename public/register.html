@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="auth-box">
+
+            <h2>Create Account</h2>
+
+            <p>Register a new account</p>
+
+            <form id="registerForm">
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+
+                <!-- Phone -->
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter password"
+                        required
+                    >
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm password"
+                        required
+                    >
+                </div>
+
+
+                <!-- Register Button -->
+                <button
+                    type="submit"
+                    class="btn"
+                    id="registerButton"
+                >
+                    Register
+                </button>
+
+            </form>
+
+
+            <!-- Message -->
+            <p id="registerMessage"></p>
+
+
+            <!-- Login Link -->
+            <p class="form-link">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Get registration form
+        const registerForm =
+            document.getElementById("registerForm");
+
+
+        // Get message area
+        const message =
+            document.getElementById("registerMessage");
+
+
+        // Get button
+        const registerButton =
+            document.getElementById("registerButton");
+
+
+        // Submit registration form
+        registerForm.addEventListener(
+            "submit",
+            async function (e) {
+
+                // Prevent normal HTML form submission
+                e.preventDefault();
+
+
+                // Get form values
+                const fullName =
+                    document.getElementById("fullName").value.trim();
+
+                const email =
+                    document.getElementById("email").value.trim();
+
+                const phone =
+                    document.getElementById("phone").value.trim();
+
+                const password =
+                    document.getElementById("password").value;
+
+                const confirmPassword =
+                    document.getElementById("confirmPassword").value;
+
+
+                // Check password
+                if (password !== confirmPassword) {
+
+                    message.textContent =
+                        "Passwords do not match.";
+
+                    message.style.color = "red";
+
+                    return;
+                }
+
+
+                // Create data to send to backend
+                const formData = {
+
+                    fullName: fullName,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword,
+                    phone: phone
+
+                };
+
+
+                // Display data in console for testing
+                console.log("Registration Data:", formData);
+
+
+                // Disable button while registering
+                registerButton.disabled = true;
+
+                registerButton.textContent =
+                    "Registering...";
+
+
+                try {
+
+                    // Send data to Node.js backend
+                    const response = await fetch(
+                        "http://localhost:5000/api/auth/register-user",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(formData)
+                        }
+                    );
+
+
+                    // Get backend response
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "Status:",
+                        response.status
+                    );
+
+                    console.log(
+                        "Server Response:",
+                        data
+                    );
+
+
+                    // Successful registration
+                    if (response.ok) {
+                        message.textContent =  "Registration successful! Redirecting to login...";
+                        message.style.color =  "green";
+
+                        // Clear form
+                        registerForm.reset();
+
+                        // Redirect to login after 1.5 seconds
+                        setTimeout(function () {
+                            window.location.href =  "login.html";
+                        }, 1500);
+
+                    } else {
+
+                        // Backend returned an error
+                        message.textContent =
+                            data.message ||
+                            "Registration failed.";
+
+                        message.style.color =
+                            "red";
+
+                        // Enable button again
+                        registerButton.disabled =
+                            false;
+
+                        registerButton.textContent =
+                            "Register";
+                    }
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Registration Error:",
+                        error
+                    );
+
+                    message.textContent =
+                        "Unable to connect to the server.";
+                    message.style.color =
+                        "red";
+
+                    // Enable button again
+                    registerButton.disabled =
+                        false;
+                    registerButton.textContent =
+                        "Register";
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

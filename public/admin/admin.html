@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>Product<span>Store</span></h2>
+        </div>
+
+        <nav>
+
+            <button class="nav-item active"
+                    onclick="showSection('dashboard')">
+                🏠
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('create-product')">
+                ➕
+                <span>Create Product</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('products')">
+                📦
+                <span>View Products</span>
+            </button>
+
+            <button class="nav-item"
+                    onclick="showSection('users')">
+                👥
+                <span>Users</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <button class="nav-item logout"
+                    id="logoutBtn">
+
+                🚪
+                <span>Logout</span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <button class="menu-btn"
+                        id="menuBtn">
+                    ☰
+                </button>
+
+                <span id="pageTitle">
+                    Dashboard
+                </span>
+
+            </div>
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    A
+                </div>
+
+                <div>
+
+                    <strong id="adminName">
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard"
+                 class="content-section active-section">
+
+            <div class="welcome">
+
+                <div>
+
+                    <h1>Welcome back, Admin 👋</h1>
+
+                    <p>
+                        Manage your products and users
+                        from your dashboard.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <p>Total Products</p>
+
+                        <h2 id="totalProducts">
+                            0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <p>Total Users</p>
+
+                        <h2 id="totalUsers">
+                            0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        🛒
+                    </div>
+
+                    <div>
+
+                        <p>Products Available</p>
+
+                        <h2 id="availableProducts">
+                            0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT PRODUCTS -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>Recent Products</h2>
+
+                    <button
+                        onclick="showSection('products')">
+                        View All
+                    </button>
+
+                </div>
+
+                <div id="recentProducts">
+
+                    <p class="loading">
+                        Loading products...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CREATE PRODUCT -->
+
+        <section id="create-product"
+                 class="content-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h1>Create Product</h1>
+
+                    <p>
+                        Add a new product to your store.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-card">
+
+                <form id="productForm">
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Product Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="Enter product name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Price
+                            </label>
+
+                            <input
+                                type="number"
+                                id="price"
+                                placeholder="Enter price"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="Enter product description"
+                            required>
+                        </textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            placeholder="Enter quantity"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!--IMAGE OF PRODUCT-->
+                    <div class="image-upload">
+
+    <label for="image" class="upload-box">
+
+        <span class="upload-icon">
+            📷
+        </span>
+
+        <strong>
+            Choose Product Image
+        </strong>
+
+        <small>
+            PNG, JPG or WEBP
+        </small>
+
+    </label>
+
+    <input
+        type="file"
+        id="image"
+        name="image"
+        accept="image/png, image/jpeg, image/webp"
+        hidden
+    >
+
+    <img
+        id="imagePreview"
+        class="image-preview"
+        alt="Product preview"
+    >
+
+</div>
+
+
+
+
+
+
+                    <button
+                        type="submit"
+                        class="primary-btn">
+
+                        Create Product
+
+                    </button>
+
+                    <p id="productMessage"></p>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCTS -->
+
+        <section id="products"
+                 class="content-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h1>Products</h1>
+
+                    <p>
+                        View all products in the system.
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="showSection('create-product')">
+
+                    + Add Product
+
+                </button>
+
+            </div>
+
+
+            <div class="table-card">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Product</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Images</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="productsTable">
+
+                        <tr>
+
+                            <td colspan="4">
+                                Loading products...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- USERS -->
+
+        <section id="users"
+                 class="content-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h1>Users</h1>
+
+                    <p>
+                        Manage registered users.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-card">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="usersTable">
+
+                        <tr>
+
+                            <td colspan="4">
+                                Loading users...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="../js/admin.js"></script>
+
+</body>
+
+</html>

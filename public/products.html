@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Products | ProductStore</title>
+
+    <link
+        rel="stylesheet"
+        href="css/product.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="brand">
+            <h2>Product<span>Store</span></h2>
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="products.html" class="active">
+                Products
+            </a>
+
+            <a
+                href="admin/admin.html"
+                id="adminLink"
+                class="hidden"
+            >
+                Admin Dashboard
+            </a>
+
+        </nav>
+
+        <div class="user-area">
+
+            <div class="user-avatar" id="userAvatar">
+                U
+            </div>
+
+            <div class="user-info">
+
+                <strong id="userName">
+                    User
+                </strong>
+
+                <small id="userRole">
+                    User
+                </small>
+
+            </div>
+
+            <button
+                id="logoutBtn"
+                class="logout-btn"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div>
+
+                <span class="hero-label">
+                    PRODUCT STORE
+                </span>
+
+                <h1>
+                    Discover Our Products
+                </h1>
+
+                <p>
+                    Browse through our collection
+                    of quality products.
+                </p>
+
+            </div>
+
+            <div class="hero-icon">
+                🛍️
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+
+        <!-- STATISTICS -->
+
+        <section class="product-stats">
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Products
+                    </span>
+
+                    <strong id="totalProducts">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    ✅
+                </div>
+
+                <div>
+
+                    <span>
+                        Available
+                    </span>
+
+                    <strong id="availableProducts">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    ❌
+                </div>
+
+                <div>
+
+                    <span>
+                        Out of Stock
+                    </span>
+
+                    <strong id="outOfStock">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOOLBAR -->
+
+        <section class="toolbar">
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search products..."
+                >
+
+            </div>
+
+
+            <div class="toolbar-actions">
+
+                <select id="sortProducts">
+
+                    <option value="default">
+                        Sort Products
+                    </option>
+
+                    <option value="name">
+                        Name: A-Z
+                    </option>
+
+                    <option value="price-low">
+                        Price: Low to High
+                    </option>
+
+                    <option value="price-high">
+                        Price: High to Low
+                    </option>
+
+                    <option value="quantity">
+                        Quantity
+                    </option>
+
+                </select>
+
+
+                <button
+                    id="refreshBtn"
+                    class="refresh-btn"
+                >
+                    ↻ Refresh
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCT TITLE -->
+
+        <div class="products-heading">
+
+            <div>
+
+                <h2>
+                    All Products
+                </h2>
+
+                <p id="resultText">
+                    Showing all products
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <section
+            id="productsList"
+            class="products-grid"
+        >
+
+            <div class="loading-card">
+
+                <div class="loader"></div>
+
+                <p>
+                    Loading products...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- NO PRODUCTS -->
+
+        <div
+            id="noProducts"
+            class="no-products hidden"
+        >
+
+            <div>
+                🔍
+            </div>
+
+            <h2>
+                No Products Found
+            </h2>
+
+            <p>
+                Try changing your search.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- EDIT PRODUCT MODAL -->
+
+    <div
+        id="editModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Edit Product
+                    </h2>
+
+                    <p>
+                        Update product information
+                    </p>
+
+                </div>
+
+                <button
+                    id="closeModal"
+                    class="close-btn"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="editProductForm">
+
+                <input
+                    type="hidden"
+                    id="editProductId"
+                >
+
+
+                <div class="form-group">
+
+                    <label>
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editName"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        id="editDescription"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editPrice"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editQuantity"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+
+                <p id="editMessage"></p>
+
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    Save Changes
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/products.js"></script>
+
+</body>
+
+</html>

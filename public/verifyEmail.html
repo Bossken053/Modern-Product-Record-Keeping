@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+</head>
+<body>
+    <h2>Email Verification</h2>
+    <p id="message">Verifying your email...</p>
+
+
+    <script>
+        async function verifyEmail() {
+            const message = document.getElementById("message");
+            const loginLink = document.getElementById("loginLink");
+            const resendLink = document.getElementById("resendLink");
+
+            const token =
+                new URLSearchParams(window.location.search).get("token");
+
+            if (!token) {
+                message.textContent = "Verification token is missing.";
+                resendLink.hidden = false;
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `http://localhost:5000/api/auth/verifyEmail/${token}`
+                );
+
+                const data = await response.json();
+
+                message.textContent = data.message;
+                if(response.ok){
+                window.location.href= "login.html"
+
+                }else{
+                        alert("Email not verified")
+                }
+            } catch (error) {
+                message.textContent =
+                    "Unable to connect to the server. Please try again.";
+            }
+        }
+
+        verifyEmail();
+    </script>
+</body>
+</html>
